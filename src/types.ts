@@ -3,7 +3,7 @@ export type video = "video";
 export type note = "note";
 export type task = "task";
 export type Element = HTMLElement | HTMLInputElement | null;
-
+export type Value = string | null;
 type mediaContent = {
   desc: string;
   url: string;
