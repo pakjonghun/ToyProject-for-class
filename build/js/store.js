@@ -24,6 +24,7 @@ var Store = /** @class */ (function () {
     Store.prototype.delete = function (id) {
         var isExsit = false;
         var newData = [];
+        console.log(id, this.load());
         for (var _i = 0, _a = this.load(); _i < _a.length; _i++) {
             var item = _a[_i];
             if (item.id === id) {

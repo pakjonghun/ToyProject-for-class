@@ -29,6 +29,7 @@ export default class Store implements IStore {
   delete(id: string): void {
     let isExsit = false;
     const newData = [];
+    console.log(id, this.load());
     for (let item of this.load()) {
       if (item.id === id) {
         isExsit = true;

@@ -10,6 +10,8 @@ const modal: IModal = new Modal();
 const store: IStore = new Store();
 const paintList: IPaintList = new PaintList();
 
+const parent = document.querySelector(".list");
+
 window.addEventListener("load", () => {
   const parent = document.querySelector(".list");
   if (parent == null) return;
@@ -18,13 +20,17 @@ window.addEventListener("load", () => {
 
 function onSubmit() {
   const data: content | void = getData.getData();
-  const parent = document.querySelector(".list");
   if (!parent || data == null) return;
   store.save(data);
-
   paintList.paint(parent, store.load());
 }
 modal.injectOnSubmit = onSubmit;
 
+function onDeleteItem(id: string) {
+  if (!parent) return;
+  store.delete(id);
+  paintList.paint(parent, store.load());
+}
+paintList.onDeleteClick = onDeleteItem;
 const header = new Header();
 header.injectMenuClick = modal.toggle;

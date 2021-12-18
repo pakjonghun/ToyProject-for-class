@@ -7,6 +7,7 @@ var getData = new GetData();
 var modal = new Modal();
 var store = new Store();
 var paintList = new PaintList();
+var parent = document.querySelector(".list");
 window.addEventListener("load", function () {
     var parent = document.querySelector(".list");
     if (parent == null)
@@ -15,13 +16,19 @@ window.addEventListener("load", function () {
 });
 function onSubmit() {
     var data = getData.getData();
-    var parent = document.querySelector(".list");
     if (!parent || data == null)
         return;
     store.save(data);
     paintList.paint(parent, store.load());
 }
 modal.injectOnSubmit = onSubmit;
+function onDeleteItem(id) {
+    if (!parent)
+        return;
+    store.delete(id);
+    paintList.paint(parent, store.load());
+}
+paintList.onDeleteClick = onDeleteItem;
 var header = new Header();
 header.injectMenuClick = modal.toggle;
 //# sourceMappingURL=main.js.map

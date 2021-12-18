@@ -23,7 +23,6 @@ export default class GetData implements IGetData {
         const title = this.titleInput?.value;
         const desc = this.descInput?.value;
         const type = this.descInput?.dataset.type;
-
         if (!title || !desc) return alert("빈 공간은 입력 될 수 없습니다.");
 
         switch (type) {
