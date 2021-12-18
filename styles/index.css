@@ -132,7 +132,6 @@ button:active,
   height: 10rem;
   width: 15rem;
   border: 1px solid black;
-  background: url(/images/cool-background.png) center/cover no-repeat;
 }
 
 .contentInfo,

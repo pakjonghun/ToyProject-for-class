@@ -1,5 +1,4 @@
 import { content } from "./types.js";
-import { idMaker } from "./utility.js";
 
 export interface IStore {
   save(data: content): void;
@@ -8,63 +7,37 @@ export interface IStore {
 }
 
 export default class Store implements IStore {
-  private init: string | null | undefined;
-
-  constructor() {
-    this.getUpdatedDataes();
-  }
-
-  private pushInitialData(data: content) {
-    const readyToSave: string = JSON.stringify({ id: idMaker(), data });
-    this.saveToLocalstorage(readyToSave);
-  }
-
-  private pushNewData(data: content, init: string) {
-    const item = JSON.parse(init);
-    const readyToSave = JSON.stringify((item[idMaker()] = data));
-    this.saveToLocalstorage(readyToSave);
-  }
-
   private saveToLocalstorage(data: string) {
     localStorage.setItem("data", data);
   }
 
-  private deleteById(id: string) {}
-
-  private checkIsInitNull() {
-    return this.init == null;
-  }
-
-  private getUpdatedDataes() {
-    this.init = localStorage.getItem("data");
+  private getUpdatedData(): string | null {
+    return localStorage.getItem("data");
   }
 
   load(): content[] {
-    const isInitNull = this.checkIsInitNull();
-    switch (isInitNull) {
-      case false:
-        this.getUpdatedDataes();
-        JSON.parse(this.init!);
-        break;
-    
-      default:
-        break;
-    }
-    
-  }}
+    const temp = this.getUpdatedData();
+    return temp == null ? [] : JSON.parse(temp);
+  }
 
   save(data: content) {
-    if (this.init == null) {
-      this.pushInitialData(data);
-      return;
-    }
-
-    this.init && this.pushNewData(data, this.init);
+    const curData = this.load();
+    const readyToSave = JSON.stringify([data, ...curData]);
+    localStorage.setItem("data", readyToSave);
   }
 
   delete(id: string): void {
-    if (this.init == null) throw new Error("지울 데이터가 없습니다.");
+    let isExsit = false;
+    const newData = [];
+    for (let item of this.load()) {
+      if (item.id === id) {
+        isExsit = true;
+        continue;
+      }
+      newData.push(item);
+    }
 
-    this.deleteById(id);
+    if (!isExsit) throw new Error("삭제할 리스트가 없습니다.");
+    this.saveToLocalstorage(JSON.stringify(newData));
   }
 }

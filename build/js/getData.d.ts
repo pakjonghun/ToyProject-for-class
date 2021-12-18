@@ -1,4 +1,4 @@
-import { content } from "./types";
+import { content } from "./types.js";
 export interface IGetData {
     getData(): content | void;
 }

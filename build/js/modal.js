@@ -3,8 +3,10 @@ var Modal = /** @class */ (function () {
         var _this = this;
         var _a, _b, _c, _d;
         this.createDesc = function (menu) {
-            var _a;
+            var _a, _b;
             var desc = (_a = _this.dialog) === null || _a === void 0 ? void 0 : _a.querySelector(".descLabel");
+            var descInput = (_b = _this.dialog) === null || _b === void 0 ? void 0 : _b.querySelector(".descInput");
+            descInput.dataset.type = menu;
             desc.textContent = menu;
         };
         this.toggle = function (menu) {

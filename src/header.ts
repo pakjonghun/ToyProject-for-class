@@ -1,5 +1,5 @@
 export default class Header {
-  private menus: HTMLElement | null;
+  private menus: HTMLDivElement | null;
   private onClick?: Function;
   constructor() {
     this.menus = document.querySelector(".menus");
@@ -11,7 +11,7 @@ export default class Header {
   }
 
   onMenuClick = (event: Event): void => {
-    const target = event.target as HTMLElement;
+    const target = event.target as HTMLButtonElement;
     const className = target.classList.value;
     switch (className) {
       case "banage":
