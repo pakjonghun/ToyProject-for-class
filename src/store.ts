@@ -3,6 +3,7 @@ import { idMaker } from "./utility.js";
 
 export interface IStore {
   save(data: content): void;
+  load(): content[];
   delete(id: string): void;
 }
 
@@ -30,9 +31,27 @@ export default class Store implements IStore {
 
   private deleteById(id: string) {}
 
+  private checkIsInitNull() {
+    return this.init == null;
+  }
+
   private getUpdatedDataes() {
     this.init = localStorage.getItem("data");
   }
+
+  load(): content[] {
+    const isInitNull = this.checkIsInitNull();
+    switch (isInitNull) {
+      case false:
+        this.getUpdatedDataes();
+        JSON.parse(this.init!);
+        break;
+    
+      default:
+        break;
+    }
+    
+  }}
 
   save(data: content) {
     if (this.init == null) {
