@@ -1,4 +1,4 @@
-import { BasicComponent } from "./basic.js";
+import { BasicComponent } from "../basic.js";
 export class PageComponent extends BasicComponent {
   constructor() {
     super("ul", "list");

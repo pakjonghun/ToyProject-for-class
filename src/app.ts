@@ -1,6 +1,6 @@
 import { ImageComponent } from "./components/image.js";
 import { IBasicComponent } from "./components/basic.js";
-import { PageComponent } from "./components/page.js";
+import { PageComponent } from "./components/page/page.js";
 
 class App {
   private readonly page: IBasicComponent;
