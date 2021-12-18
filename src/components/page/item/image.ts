@@ -1,20 +1,12 @@
-export class ImageComponent {
-  private element: HTMLElement;
-  constructor(url: string, title: string) {
-    const template = document.createElement("template");
-    template.innerHTML = `<div><img class="image"/></div>`;
-    this.element = template.content.firstElementChild! as HTMLElement;
-    console.log(this.element);
-    const imageElement = this.element.querySelector(
-      ".image"
-    )! as HTMLImageElement;
-    console.log(imageElement);
-    imageElement.src = url;
-    imageElement.alt = title;
-  }
+import { Component } from "../../component.js";
 
-  attachTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
-    parent.insertAdjacentElement(position, this.element);
+export class ImageComponent extends Component<HTMLElement> {
+  constructor(url: string, title: string) {
+    super(`<div><img class="a"/></div>`);
+    const img = this.element.querySelector(".a")! as HTMLImageElement;
+    console.log(img);
+    img.src = url;
+    img.alt = title;
   }
 }
 
