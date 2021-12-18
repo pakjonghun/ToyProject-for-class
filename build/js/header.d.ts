@@ -1,7 +1,7 @@
-import { IModal } from "./modal";
 export default class Header {
     private menus;
-    private modal;
-    constructor(modal: IModal);
+    private onClick?;
+    constructor();
+    set injectMenuClick(onClick: Function);
     onMenuClick: (event: Event) => void;
 }

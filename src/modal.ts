@@ -1,14 +1,17 @@
+import { IGetData } from "./getData";
 import { Menu } from "./types";
 
 export interface IModal {
   toggle(menu?: Menu): void;
+  injectOnSubmit: Function;
 }
 
 export default class Modal implements IModal {
   private dialog: Element | null;
   private close;
   private submit;
-  private onToggle?: Function;
+  private onSubmit?: Function;
+
   constructor() {
     this.dialog = document.querySelector(".dialog");
     this.close = this.dialog?.querySelector(".fa-times");
@@ -17,7 +20,7 @@ export default class Modal implements IModal {
     this.submit?.addEventListener("submit", (event: Event) => {
       event.preventDefault();
       this.toggle();
-      this.onToggle && this.onToggle();
+      this.onSubmit && this.onSubmit();
     });
   }
 
@@ -26,8 +29,8 @@ export default class Modal implements IModal {
     desc.textContent = menu;
   };
 
-  set onClick(func: Function) {
-    this.onToggle = func;
+  set injectOnSubmit(func: Function) {
+    this.onSubmit = func;
   }
 
   toggle = (menu?: Menu): void => {

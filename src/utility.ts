@@ -1,10 +1,5 @@
-import { Element, Value } from "./types";
-
-export function checkIsElementNull(element: Element[]): boolean {
-  return element.every((item) => item === null);
-}
-
-export function checkIsDataOk(element: Value[]): boolean {
+import { Value } from "./types";
+export function checkIsDataNull(element: Value[]): boolean {
   return element.every((item) => item == null);
 }
 

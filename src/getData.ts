@@ -1,11 +1,10 @@
 import { content } from "./types";
-import { checkIsElementNull } from "./utility";
 
-interface IGetData {
-  getData(): content;
+export interface IGetData {
+  getData(): content | void;
 }
 
-export default class GetData {
+export default class GetData implements IGetData {
   private titleInput: HTMLInputElement | null;
   private descInput: HTMLInputElement | null;
   constructor() {
@@ -13,18 +12,21 @@ export default class GetData {
     this.descInput = document.querySelector(".descInput");
   }
 
-  getData(): content {
-    const isElementNull = checkIsElementNull([this.titleInput, this.descInput]);
+  getData = (): content | void => {
+    switch (true) {
+      case this.titleInput == null:
+      case this.descInput == null:
+        throw new Error("element is null");
 
-    switch (isElementNull) {
-      case false:
-        const title = this.titleInput!.value;
-        const desc = this.descInput!.value;
-        return { title, desc };
       default:
-        throw new Error(
-          "null 요소가 있습니다. 클레스나 아이디를 다시 확인하세요."
-        );
+        const title = this.titleInput?.value;
+        const desc = this.descInput?.value;
+
+        if (!title || !desc) return alert("빈 공간은 입력 될 수 없습니다.");
+        return {
+          title,
+          desc,
+        };
     }
-  }
+  };
 }

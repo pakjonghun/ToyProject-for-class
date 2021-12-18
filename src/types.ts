@@ -1,9 +1,16 @@
+import GetData, { IGetData } from "./getData";
+import Modal, { IModal } from "./modal";
+import Store, { IStore } from "./store";
+
 export type banage = "banage";
 export type video = "video";
 export type note = "note";
 export type task = "task";
-export type Element = HTMLElement | HTMLInputElement | null;
 export type Value = string | null;
+
+// export type interfaceType = IGetData | IStore | IModal;
+// export type injectClass = GetData | Store | Modal;
+
 type mediaContent = {
   desc: string;
   url: string;

@@ -19,12 +19,12 @@ var Modal = /** @class */ (function () {
         (_d = this.submit) === null || _d === void 0 ? void 0 : _d.addEventListener("submit", function (event) {
             event.preventDefault();
             _this.toggle();
-            _this.onToggle && _this.onToggle();
+            _this.onSubmit && _this.onSubmit();
         });
     }
-    Object.defineProperty(Modal.prototype, "onClick", {
+    Object.defineProperty(Modal.prototype, "injectOnSubmit", {
         set: function (func) {
-            this.onToggle = func;
+            this.onSubmit = func;
         },
         enumerable: false,
         configurable: true

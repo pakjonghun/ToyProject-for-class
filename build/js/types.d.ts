@@ -2,7 +2,7 @@ export declare type banage = "banage";
 export declare type video = "video";
 export declare type note = "note";
 export declare type task = "task";
-export declare type Element = HTMLElement | HTMLInputElement | null;
+export declare type Value = string | null;
 declare type mediaContent = {
     desc: string;
     url: string;

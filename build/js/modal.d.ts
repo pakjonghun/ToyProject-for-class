@@ -1,14 +1,15 @@
 import { Menu } from "./types";
 export interface IModal {
     toggle(menu?: Menu): void;
+    injectOnSubmit: Function;
 }
 export default class Modal implements IModal {
     private dialog;
     private close;
     private submit;
-    private onToggle?;
+    private onSubmit?;
     constructor();
     private createDesc;
-    set onClick(func: Function);
+    set injectOnSubmit(func: Function);
     toggle: (menu?: Menu | undefined) => void;
 }

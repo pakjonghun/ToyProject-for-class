@@ -1,12 +1,13 @@
-import { IModal } from "./modal";
-
 export default class Header {
   private menus: HTMLElement | null;
-  private modal;
-  constructor(modal: IModal) {
-    this.modal = modal;
+  private onClick?: Function;
+  constructor() {
     this.menus = document.querySelector(".menus");
     this.menus?.addEventListener("click", this.onMenuClick);
+  }
+
+  set injectMenuClick(onClick: Function) {
+    this.onClick = onClick;
   }
 
   onMenuClick = (event: Event): void => {
@@ -17,7 +18,7 @@ export default class Header {
       case "note":
       case "task":
       case "video":
-        this.modal.toggle(className);
+        this.onClick && this.onClick(className);
         break;
 
       default:
