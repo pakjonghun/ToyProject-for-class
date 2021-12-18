@@ -1,4 +1,8 @@
-export class Component<T extends HTMLElement> {
+export interface IComponent {
+  attachTo(patent: HTMLElement, position?: InsertPosition): void;
+}
+
+export class Component<T extends HTMLElement> implements IComponent {
   protected readonly element: T;
   constructor(tagString: string) {
     const template = document.createElement("template");
@@ -6,7 +10,7 @@ export class Component<T extends HTMLElement> {
     this.element = template.content.firstElementChild! as T;
   }
 
-  attachTo(parent: T, position: InsertPosition = "afterbegin") {
+  attachTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
     parent.insertAdjacentElement(position, this.element);
   }
 }

@@ -1,10 +1,9 @@
-import { Component } from "../../component.js";
+import { Component } from "./../../component.js";
 
 export class ImageComponent extends Component<HTMLElement> {
   constructor(url: string, title: string) {
     super(`<div><img class="a"/></div>`);
     const img = this.element.querySelector(".a")! as HTMLImageElement;
-    console.log(img);
     img.src = url;
     img.alt = title;
   }

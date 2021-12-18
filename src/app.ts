@@ -1,7 +1,12 @@
+import { IComponent } from "./components/component.js";
 import { ImageComponent } from "./components/page/item/image.js";
+import { NoteComponent } from "./components/page/item/note.js";
+import { VideoComponent } from "./components/page/item/video.js";
 
 class App {
-  private readonly img: ImageComponent;
+  private readonly img: IComponent;
+  private readonly video: IComponent;
+  private readonly note: IComponent;
 
   constructor(appRoot: HTMLElement) {
     this.img = new ImageComponent(
@@ -9,7 +14,15 @@ class App {
       "title"
     );
 
+    this.video = new VideoComponent(
+      "https://www.youtube.com/embed/dcBVNxKALvI",
+      "good"
+    );
+
+    this.note = new NoteComponent("title", "desc");
     this.img.attachTo(appRoot);
+    this.video.attachTo(appRoot);
+    this.note.attachTo(appRoot);
   }
 }
 
