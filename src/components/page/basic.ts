@@ -4,9 +4,8 @@ export interface IBasicComponent {
 
 export class BasicComponent implements IBasicComponent {
   protected element: HTMLElement;
-  constructor(tagName: keyof HTMLElementTagNameMap, className: string) {
+  constructor(tagName: keyof HTMLElementTagNameMap) {
     this.element = document.createElement(tagName);
-    this.element.setAttribute("class", className);
   }
 
   attachTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
