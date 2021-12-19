@@ -1,11 +1,11 @@
 import { IBasicComponent } from "./../common/basicComponent.js";
 import { BasicComponent } from "../common/basicComponent.js";
 
-export interface Composible {
+export interface IComposible {
   addChild(child: IBasicComponent): void;
 }
 
-export class Page extends BasicComponent<HTMLElement> {
+export class Page extends BasicComponent<HTMLElement> implements IComposible {
   constructor() {
     super('<ul class="page"></ul>');
   }
@@ -17,7 +17,10 @@ export class Page extends BasicComponent<HTMLElement> {
   }
 }
 
-export class ItemWrapper extends BasicComponent<HTMLElement> {
+export class ItemWrapper
+  extends BasicComponent<HTMLElement>
+  implements IComposible
+{
   constructor() {
     super(
       `<li class="item">
