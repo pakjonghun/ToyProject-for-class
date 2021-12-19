@@ -4,6 +4,7 @@ import { Todo } from "./page/item/todo.js";
 import { IComposible, ItemWrapper, Page } from "./page/page.js";
 import { Image } from "./page/item/image.js";
 import { Note } from "./page/item/note.js";
+import { Dialog } from "./dialog.js";
 
 class App {
   private readonly page: IBasicComponent & IComposible;
@@ -16,13 +17,18 @@ class App {
       "good"
     );
 
-    this.page = new Page(ItemWrapper);
+    const dialog = new Dialog();
 
+    this.page = new Page(ItemWrapper);
+    this.page.addChild(dialog);
     this.page.addChild(video);
     this.page.addChild(note);
     this.page.addChild(todo);
     this.page.addChild(img);
     this.page.attachTo(root);
+
+    const imageBtn = document.getElementById("imageBtn")! as HTMLButtonElement;
+    imageBtn.addEventListener("click", () => {});
   }
 }
 
