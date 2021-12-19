@@ -1,7 +1,7 @@
-import { IBasicComponent } from "./common/basicComponent.js";
+import { IBasicComponent } from "./common/basicComponent";
 import { Video } from "./page/item/video.js";
 import { Todo } from "./page/item/todo.js";
-import { IComposible, Page } from "./page/page.js";
+import { IComposible, ItemWrapper, Page } from "./page/page.js";
 import { Image } from "./page/item/image.js";
 import { Note } from "./page/item/note.js";
 
@@ -15,7 +15,8 @@ class App {
       "https://www.youtube.com/watch?v=kwS3twdVsko",
       "good"
     );
-    this.page = new Page();
+
+    this.page = new Page(ItemWrapper);
 
     this.page.addChild(video);
     this.page.addChild(note);
