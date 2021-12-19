@@ -21,6 +21,13 @@ class App {
     video.attachTo(appRoot);
     note.attachTo(appRoot);
     todo.attachTo(appRoot);
+
+    const cancel = document.createElement("i");
+    cancel.setAttribute("class", "far fa-window-close");
+    todo.appendTo(cancel);
+    video.appendTo(cancel);
+    note.appendTo(cancel);
+    img.appendTo(cancel);
   }
 }
 

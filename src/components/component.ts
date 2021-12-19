@@ -1,5 +1,6 @@
 export interface IComponent {
   attachTo(patent: HTMLElement, position?: InsertPosition): void;
+  appendTo(child: HTMLElement): void;
 }
 
 export class Component<T extends HTMLElement> implements IComponent {
@@ -12,5 +13,9 @@ export class Component<T extends HTMLElement> implements IComponent {
 
   attachTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
     parent.insertAdjacentElement(position, this.element);
+  }
+
+  appendTo(child: HTMLElement) {
+    this.element.appendChild(child);
   }
 }
