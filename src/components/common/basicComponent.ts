@@ -1,5 +1,6 @@
 export interface IBasicComponent {
   attachTo(parent: HTMLElement, position?: InsertPosition): void;
+  removeFrom(parent: HTMLElement): void;
 }
 
 export class BasicComponent<T extends HTMLElement> implements IBasicComponent {
@@ -12,5 +13,12 @@ export class BasicComponent<T extends HTMLElement> implements IBasicComponent {
 
   attachTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
     parent.insertAdjacentElement(position, this.element);
+  }
+
+  removeFrom(parent: HTMLElement) {
+    if (parent !== this.element.parentElement) {
+      throw new Error("잘못된 동작 입니다.");
+    }
+    parent.removeChild(this.element);
   }
 }

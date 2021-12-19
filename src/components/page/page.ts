@@ -12,15 +12,19 @@ export class Page extends BasicComponent<HTMLElement> implements IComposible {
 
   addChild(child: IBasicComponent) {
     const list = new ItemWrapper();
+    list.onCloseFunc = () => list.removeFrom(this.element);
     list.addChild(child);
     list.attachTo(this.element);
   }
 }
 
+type onCloseListener = () => void;
+
 export class ItemWrapper
   extends BasicComponent<HTMLElement>
   implements IComposible
 {
+  private onClose?: onCloseListener;
   constructor() {
     super(
       `<li class="item">
@@ -30,6 +34,13 @@ export class ItemWrapper
         </section>
       </li>`
     );
+
+    const close = this.element.querySelector(
+      ".itemController"
+    )! as HTMLButtonElement;
+    close.addEventListener("click", () => {
+      this.onClose && this.onClose();
+    });
   }
 
   addChild(child: IBasicComponent) {
@@ -37,5 +48,9 @@ export class ItemWrapper
       ".itemBody"
     )! as HTMLLIElement;
     child.attachTo(itemSection);
+  }
+
+  set onCloseFunc(func: onCloseListener) {
+    this.onClose = func;
   }
 }
