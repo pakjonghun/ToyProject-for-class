@@ -1,15 +1,12 @@
-import { Todo } from "./item/todo.js";
-export class Page {
-  private element: HTMLUListElement;
+import { BaseComponent } from "../../component.js";
+export class Page extends BaseComponent<HTMLUListElement> {
   constructor() {
-    this.element = document.createElement("ul");
-    this.element.classList.add("page");
-    this.element.textContent = "this is ";
+    super('<ul class="page"></ul>');
   }
+}
 
-  attachTo(parent: HTMLElement, position: InsertPosition = "beforeend") {
-    parent.insertAdjacentElement(position, this.element);
-    const todo = new Todo("hihi", "desc");
-    todo.attachTo(this.element);
+export class ItemList extends BaseComponent<HTMLElement> {
+  constructor() {
+    super("");
   }
 }
