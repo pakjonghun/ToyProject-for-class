@@ -3,6 +3,6 @@ export interface IbaseComponent {
   removeFrom(parent: HTMLElement): void;
 }
 
-export interface IaddChildComponent {
+export interface Icomposible {
   addChild(child: IbaseComponent): void;
 }

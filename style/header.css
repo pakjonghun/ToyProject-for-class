@@ -1,7 +1,6 @@
 .header {
   width: inherit;
   padding: 1rem 2rem;
-  background-color: var(--black90);
   text-align: center;
 }
 
@@ -14,6 +13,7 @@
 .btn {
   padding: 0.5rem 1rem;
   border-radius: 0.2rem;
+  text-transform: uppercase;
 }
 
 .header__btn:not(:last-child) {
