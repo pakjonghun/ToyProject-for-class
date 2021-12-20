@@ -1,6 +1,4 @@
-export interface IbaseComponent {
-  attachTo(parent: HTMLElement, position: InsertPosition): void;
-}
+import { IbaseComponent } from "./interfaces.js";
 
 export class BaseComponent implements IbaseComponent {
   protected readonly element: HTMLElement;
