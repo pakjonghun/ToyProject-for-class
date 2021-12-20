@@ -9,6 +9,12 @@
   margin: 0;
 }
 
+input {
+  font-size: 1.2rem;
+  border: none;
+  outline: none;
+}
+
 li {
   list-style: none;
   padding-left: 0;
@@ -107,9 +113,63 @@ button:active {
 
 .dialog button {
   margin-bottom: 0.5rem;
-  padding: 0.3rem;
 }
 
 .none {
   display: none;
+}
+
+.add,
+.close {
+  align-self: flex-end;
+  padding: 0.3rem 0.5rem;
+  color: white;
+  font-size: 1.1rem;
+  background-color: coral;
+}
+
+.add {
+  padding: 0.3rem 1rem;
+}
+
+.body > div label {
+  margin-top: 1rem;
+  color: white;
+  font-weight: 800;
+}
+
+.body > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.body > div > input {
+  padding: 0.5rem 1rem;
+}
+
+.item {
+  width: 90%;
+  margin: 1rem auto;
+  background-color: var(--black50);
+}
+
+.itemSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.itemController {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 1rem;
+  background-color: coral;
+  color: white;
+}
+
+.itemSection .title,
+.itemSection .desc {
+  padding: 1rem;
+  color: white;
 }
