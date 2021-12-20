@@ -93,8 +93,8 @@ class App {
         dialog.removeFrom(document.body);
       };
       dialog.onSubmitClick = () => {
-        const { title = "" } = todoDialog.extractData();
-        const todoItem = new Todo(title);
+        console.log(todoDialog.title);
+        const todoItem = new Todo(todoDialog.title);
         this.page.addChild(todoItem);
         dialog.removeFrom(document.body);
       };

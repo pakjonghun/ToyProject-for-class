@@ -11,6 +11,11 @@ export class TodoDialog
           </div>`);
   }
 
+  get title() {
+    const title = document.querySelector(".todo")! as HTMLInputElement;
+    return title.value;
+  }
+
   extractData(): extractType {
     const title = document.querySelector(".todo")! as HTMLInputElement;
     return {
