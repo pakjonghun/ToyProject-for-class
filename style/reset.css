@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+}
+
+input,
+button {
+  outline: none;
+  border: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button:active {
+  opacity: 0.7;
+}
