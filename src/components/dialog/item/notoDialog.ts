@@ -22,4 +22,14 @@ export class NoteDialog
       desc: desc.value,
     };
   }
+
+  get title() {
+    const title = this.element.querySelector(".title")! as HTMLInputElement;
+    return title.value;
+  }
+
+  get desc() {
+    const desc = this.element.querySelector(".desc")! as HTMLInputElement;
+    return desc.value;
+  }
 }

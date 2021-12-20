@@ -23,4 +23,14 @@ export class VideoDialog
       title: title.value,
     };
   }
+
+  get url() {
+    const url = this.element.querySelector(".url")! as HTMLInputElement;
+    return url.value;
+  }
+
+  get title() {
+    const title = this.element.querySelector(".title")! as HTMLInputElement;
+    return title.value;
+  }
 }

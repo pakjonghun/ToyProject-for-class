@@ -3,12 +3,33 @@ import { NoteDialog } from "./dialog/item/notoDialog.js";
 import { Video } from "./page/item/video.js";
 import { VideoDialog } from "./dialog/item/videoDialog.js";
 import { Dialog } from "./dialog/dialog.js";
-import { IBasicComponent } from "./common/basicComponent.js";
+import { BasicComponent, IBasicComponent } from "./common/basicComponent.js";
 import { IComposible, ItemWrapper, Page } from "./page/page.js";
 import { Image } from "./page/item/image.js";
 import { ImageDialog } from "./dialog/item/imageDialog.js";
 import { Note } from "./page/item/note.js";
 import { Todo } from "./page/item/todo.js";
+
+type Menu = "img" | "video" | "todo" | "note";
+
+type Imge = "img";
+type Videoe = "video";
+type Todoe = "todo";
+type Notee = "note";
+
+const dialogMapper = {
+  img: () => new ImageDialog(),
+  video: () => new VideoDialog(),
+  todo: () => new TodoDialog(),
+  note: () => new NoteDialog(),
+};
+
+const itemMapper = {
+  img: (url: string, title: string) => new Image(url, title),
+  video: (url: string, title: string) => new Video(url, title),
+  todo: (todo: string) => new Todo(todo),
+  note: (title: string, desc: string) => new Note(title, desc),
+};
 
 class App {
   private readonly page: IBasicComponent & IComposible;
@@ -89,17 +110,31 @@ class App {
       dialog.onToggleClick = () => {
         dialog.removeFrom(document.body);
       };
-      dialog.onToggleClick = () => {
-        dialog.removeFrom(document.body);
-      };
+
       dialog.onSubmitClick = () => {
-        console.log(todoDialog.title);
         const todoItem = new Todo(todoDialog.title);
         this.page.addChild(todoItem);
         dialog.removeFrom(document.body);
       };
 
       dialog.attachTo(document.body);
+    };
+  }
+
+  private onClickFunc(menu: Menu, id: string) {
+    const btn = document.getElementById(id)! as HTMLElement;
+    btn.onclick = () => {
+      const dialog = new Dialog();
+      const inputDialog = dialogMapper[menu]();
+      dialog.addChild(inputDialog);
+      dialog.onToggleClick = () => {
+        dialog.removeFrom(document.body);
+      };
+      dialog.onSubmitClick = () => {
+        const args = inputDialog.extractData();
+        const item = itemMapper[menu]();
+        this.page.addChild(item);
+      };
     };
   }
 }
