@@ -1,14 +1,14 @@
-import { IBasicComponent } from "./common/basicComponent";
+import { Dialog } from "./dialog/dialog.js";
+import { IBasicComponent } from "./common/basicComponent.js";
 import { Video } from "./page/item/video.js";
 import { Todo } from "./page/item/todo.js";
 import { IComposible, ItemWrapper, Page } from "./page/page.js";
 import { Image } from "./page/item/image.js";
 import { Note } from "./page/item/note.js";
-import { Dialog } from "./dialog/dialog.js";
 
 class App {
   private readonly page: IBasicComponent & IComposible;
-  constructor(root: HTMLElement) {
+  constructor(main: HTMLElement) {
     const img = new Image("https://picsum.photos/200/200", "good");
     const note = new Note("hihi", "hihidesc");
     const todo = new Todo("todotodo");
@@ -17,18 +17,27 @@ class App {
       "good"
     );
 
-    const dialog = new Dialog();
-
     this.page = new Page(ItemWrapper);
-    this.page.addChild(dialog);
     this.page.addChild(video);
     this.page.addChild(note);
     this.page.addChild(todo);
     this.page.addChild(img);
-    this.page.attachTo(root);
+    this.page.attachTo(main);
 
     const imageBtn = document.getElementById("imageBtn")! as HTMLButtonElement;
-    imageBtn.addEventListener("click", () => {});
+    imageBtn.addEventListener("click", () => {
+      const dialog = new Dialog();
+
+      dialog.attachTo(document.body);
+
+      dialog.onToggleClick = () => {
+        dialog.removeFrom(document.body);
+      };
+
+      dialog.onSubmitClick = () => {
+        dialog.removeFrom(document.body);
+      };
+    });
   }
 }
 

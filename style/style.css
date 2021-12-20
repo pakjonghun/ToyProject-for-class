@@ -86,15 +86,28 @@ button:active {
   text-align: center;
 }
 
-.dialog {
+.dialogContainer {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 2;
+}
+
+.dialog {
+  width: 50%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--black50);
+}
+
+.dialog button {
+  margin-bottom: 0.5rem;
+  padding: 0.3rem;
 }
 
 .none {
