@@ -1,9 +1,9 @@
-import { Composible, IComponent } from "./../../interfaces.js";
+import { IComposible, IComponent } from "./../../interfaces.js";
 import { BaseComponent } from "../../component.js";
 
 export class Page
   extends BaseComponent<HTMLUListElement>
-  implements Composible
+  implements IComposible
 {
   constructor() {
     super('<ul class="page"></ul>');
@@ -16,7 +16,10 @@ export class Page
   }
 }
 
-export class ItemList extends BaseComponent<HTMLElement> implements Composible {
+export class ItemList
+  extends BaseComponent<HTMLElement>
+  implements IComposible
+{
   constructor() {
     super(`<li><button class="times">&times;</button></li>`);
 

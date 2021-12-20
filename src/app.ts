@@ -1,7 +1,8 @@
+import { IComposible, IComponent } from "./interfaces.js";
 import { Video } from "./components/page/item/video.js";
 import { Page } from "./components/page/page.js";
 class App {
-  private readonly page: Page;
+  private readonly page: IComposible & IComponent;
 
   constructor(root: HTMLElement) {
     this.page = new Page();
