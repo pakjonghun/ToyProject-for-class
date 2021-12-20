@@ -9,4 +9,12 @@ export class BaseComponent implements IbaseComponent {
   attachTo(parent: HTMLElement, position: InsertPosition = "beforeend") {
     parent.insertAdjacentElement(position, this.element);
   }
+
+  removeFrom = (parent: HTMLElement) => {
+    if (parent !== this.element.parentElement) {
+      throw new Error("부모 자식 관계가 아닙니다.");
+    }
+
+    parent.removeChild(this.element);
+  };
 }
