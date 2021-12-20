@@ -1,11 +1,11 @@
 import { BaseComponent } from "../../../component.js";
 
-export class Image extends BaseComponent<HTMLLIElement> {
+export class Image extends BaseComponent<HTMLScriptElement> {
   constructor(url: string, title: string) {
-    super(`<li>
+    super(`<section>
             <img class="img">
             <h1 class="title"></h1>
-          </li>`);
+          </section>`);
 
     const img = this.element.querySelector("img")! as HTMLImageElement;
     img.src = url;

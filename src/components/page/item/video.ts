@@ -1,12 +1,12 @@
 import { BaseComponent } from "../../../component.js";
 
-export class Video extends BaseComponent<HTMLLinkElement> {
+export class Video extends BaseComponent<HTMLScriptElement> {
   constructor(url: string, title: string) {
     super(
-      `<li>
+      `<section>
         <iframe class="video"></iframe>
         <h1 class="title"></h1>
-      </li>`
+      </section>`
     );
 
     const iframe = this.element.querySelector("iframe")! as HTMLIFrameElement;
@@ -14,7 +14,6 @@ export class Video extends BaseComponent<HTMLLinkElement> {
 
     h1.textContent = title;
     iframe.src = this.parseUrl(url);
-    console.log(iframe.src);
   }
 
   private parseUrl(url: string): string {
@@ -23,7 +22,6 @@ export class Video extends BaseComponent<HTMLLinkElement> {
     const temp = url.match(regExp);
     if (!temp || !temp[1]) return url;
     const id = temp[1];
-    console.log(id);
     return `https://www.youtube.com/embed/${id}`;
   }
 }

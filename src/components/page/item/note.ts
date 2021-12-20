@@ -1,12 +1,12 @@
 import { BaseComponent } from "../../../component.js";
 
-export class Note extends BaseComponent<HTMLLIElement> {
+export class Note extends BaseComponent<HTMLScriptElement> {
   constructor(title: string, content: string) {
     super(
-      `<li>
+      `<section>
         <h1 class="title"></h1>
         <h2 class="content"></h2>
-      </li>`
+      </section>`
     );
 
     const h1 = this.element.querySelector("h1")! as HTMLHeadingElement;

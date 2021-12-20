@@ -1,5 +1,5 @@
 import { Video } from "./components/page/item/video.js";
-import { Page } from "./components/page/page.js";
+import { ItemList, Page } from "./components/page/page.js";
 class App {
   private readonly page: Page;
 
@@ -8,7 +8,9 @@ class App {
     this.page.attachTo(root);
 
     const vi = new Video("https://www.youtube.com/watch?v=NFi_-3KfiWA", "소금");
-    vi.attachTo(root);
+    const itemList = new ItemList(Video);
+    itemList.addChild();
+    this.page.addChild(itemList);
   }
 }
 
