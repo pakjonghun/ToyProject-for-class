@@ -10,68 +10,60 @@ import { ImageDialog } from "./dialog/item/imageDialog.js";
 import { Note } from "./page/item/note.js";
 import { Todo } from "./page/item/todo.js";
 
-type InputConstractor<T = ImageDialog | NoteDialog | TodoDialog | VideoDialog> =
-  {
-    new (): T;
-  };
+type InputConstractor<
+  T extends VideoDialog | ImageDialog | NoteDialog | TodoDialog
+> = {
+  new (): T;
+};
 
 class App {
   private readonly page: IBasicComponent & IComposible;
+  private readonly rootBody;
   constructor(main: HTMLElement) {
-    // const img = new Image("https://picsum.photos/200/200", "good");
-    // const note = new Note("hihi", "hihidesc");
-    // const todo = new Todo("todotodo");
-    // const video = new Video(
-    //   "https://www.youtube.com/watch?v=kwS3twdVsko",
-    //   "good"
-    // );
-
+    this.rootBody = document.body;
     this.page = new Page(ItemWrapper);
     this.page.attachTo(main);
 
-    this.onClickFunc<Image, ImageDialog>(
+    this.makeOnMenuClick<ImageDialog, Image>(
       "imageBtn",
       ImageDialog,
-      (args: ImageDialog) => new Image(args.url, args.desc)
+      (arg: ImageDialog) => new Image(arg.url, arg.desc)
     );
-
-    this.onClickFunc<Video, VideoDialog>(
+    this.makeOnMenuClick<VideoDialog, Video>(
       "videoBtn",
       VideoDialog,
-      (args: VideoDialog) => new Video(args.url, args.title)
+      (arg: VideoDialog) => new Video(arg.url, arg.title)
     );
-
-    this.onClickFunc<Note, NoteDialog>(
-      "noteBtn",
-      NoteDialog,
-      (args: NoteDialog) => new Note(args.title, args.desc)
-    );
-
-    this.onClickFunc<Todo, TodoDialog>(
+    this.makeOnMenuClick<TodoDialog, Todo>(
       "todoBtn",
       TodoDialog,
-      (input: TodoDialog) => new Todo(input.title)
+      (arg: TodoDialog) => new Todo(arg.title)
+    );
+    this.makeOnMenuClick<NoteDialog, Note>(
+      "noteBtn",
+      NoteDialog,
+      (arg: NoteDialog) => new Note(arg.title, arg.desc)
     );
   }
 
-  private onClickFunc<
-    I extends Video | Image | Todo | Note,
-    T extends ImageDialog | NoteDialog | TodoDialog | VideoDialog
-  >(id: string, Input: InputConstractor<T>, makeItem: (args: T) => I) {
-    const btn = document.getElementById(id)! as HTMLElement;
-    btn.onclick = () => {
+  makeOnMenuClick<
+    T extends ImageDialog | NoteDialog | TodoDialog | VideoDialog,
+    I extends Image | Note | Todo | Video
+  >(id: string, Input: InputConstractor<T>, makeItem: (arg: T) => I) {
+    const menu = document.getElementById(id)! as HTMLElement;
+    menu.onclick = () => {
       const dialog = new Dialog();
-      const inputDialog = new Input();
-      dialog.addChild(inputDialog);
+      const input = new Input();
+      dialog.addChild(input);
       dialog.onToggleClick = () => {
-        dialog.removeFrom(document.body);
+        dialog.removeFrom(this.rootBody);
       };
       dialog.onSubmitClick = () => {
-        const component = makeItem(inputDialog);
-        this.page.addChild(component);
-        dialog.removeFrom(document.body);
+        const item = makeItem(input);
+        this.page.addChild(item);
+        dialog.removeFrom(this.rootBody);
       };
-      dialog.attachTo(document.body);
+      dialog.attachTo(this.rootBody);
     };
   }
 }
