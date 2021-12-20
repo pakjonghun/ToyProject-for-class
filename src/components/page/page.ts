@@ -9,7 +9,7 @@ export interface IItemWrapper extends IBasicComponent, IComposible {
   onCloseFunc: onCloseListener;
 }
 
-type List = {
+export type List = {
   new (): IItemWrapper;
 };
 

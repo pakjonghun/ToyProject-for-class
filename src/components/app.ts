@@ -4,7 +4,7 @@ import { Todo } from "./page/item/todo.js";
 import { IComposible, ItemWrapper, Page } from "./page/page.js";
 import { Image } from "./page/item/image.js";
 import { Note } from "./page/item/note.js";
-import { Dialog } from "./dialog.js";
+import { Dialog } from "./dialog/dialog.js";
 
 class App {
   private readonly page: IBasicComponent & IComposible;

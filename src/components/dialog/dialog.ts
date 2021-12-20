@@ -1,4 +1,4 @@
-import { BasicComponent } from "./common/basicComponent.js";
+import { BasicComponent } from "../common/basicComponent.js";
 export class Dialog extends BasicComponent<HTMLElement> {
   constructor() {
     super(
