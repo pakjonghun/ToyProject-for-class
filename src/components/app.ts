@@ -3,33 +3,17 @@ import { NoteDialog } from "./dialog/item/notoDialog.js";
 import { Video } from "./page/item/video.js";
 import { VideoDialog } from "./dialog/item/videoDialog.js";
 import { Dialog } from "./dialog/dialog.js";
-import { BasicComponent, IBasicComponent } from "./common/basicComponent.js";
+import { IBasicComponent } from "./common/basicComponent.js";
 import { IComposible, ItemWrapper, Page } from "./page/page.js";
 import { Image } from "./page/item/image.js";
 import { ImageDialog } from "./dialog/item/imageDialog.js";
 import { Note } from "./page/item/note.js";
 import { Todo } from "./page/item/todo.js";
 
-type Menu = "img" | "video" | "todo" | "note";
-
-type Imge = "img";
-type Videoe = "video";
-type Todoe = "todo";
-type Notee = "note";
-
-const dialogMapper = {
-  img: () => new ImageDialog(),
-  video: () => new VideoDialog(),
-  todo: () => new TodoDialog(),
-  note: () => new NoteDialog(),
-};
-
-const itemMapper = {
-  img: (url: string, title: string) => new Image(url, title),
-  video: (url: string, title: string) => new Video(url, title),
-  todo: (todo: string) => new Todo(todo),
-  note: (title: string, desc: string) => new Note(title, desc),
-};
+type InputConstractor<T = ImageDialog | NoteDialog | TodoDialog | VideoDialog> =
+  {
+    new (): T;
+  };
 
 class App {
   private readonly page: IBasicComponent & IComposible;
@@ -44,97 +28,50 @@ class App {
 
     this.page = new Page(ItemWrapper);
     this.page.attachTo(main);
-    const imageBtn = document.getElementById("imageBtn")! as HTMLButtonElement;
-    imageBtn.addEventListener("click", () => {
-      const dialog = new Dialog();
 
-      dialog.attachTo(document.body);
-      const imageForm = new ImageDialog();
-      dialog.addChild(imageForm);
+    this.onClickFunc<Image, ImageDialog>(
+      "imageBtn",
+      ImageDialog,
+      (args: ImageDialog) => new Image(args.url, args.desc)
+    );
 
-      dialog.onToggleClick = () => {
-        dialog.removeFrom(document.body);
-      };
+    this.onClickFunc<Video, VideoDialog>(
+      "videoBtn",
+      VideoDialog,
+      (args: VideoDialog) => new Video(args.url, args.title)
+    );
 
-      dialog.onSubmitClick = () => {
-        const { url = "", desc = "" } = imageForm.extractData();
-        const img = new Image(url, desc);
-        this.page.addChild(img);
-        dialog.removeFrom(document.body);
-      };
-    });
+    this.onClickFunc<Note, NoteDialog>(
+      "noteBtn",
+      NoteDialog,
+      (args: NoteDialog) => new Note(args.title, args.desc)
+    );
 
-    const videoBtn = document.getElementById("videoBtn")! as HTMLButtonElement;
-    videoBtn.onclick = () => {
-      const dialog = new Dialog();
-      const videoDialog = new VideoDialog();
-      dialog.addChild(videoDialog);
-      dialog.attachTo(document.body);
-      dialog.onSubmitClick = () => {
-        const { url = "", title = "" } = videoDialog.extractData();
-        const video = new Video(url, title);
-        this.page.addChild(video);
-        dialog.removeFrom(document.body);
-      };
-
-      dialog.onToggleClick = () => {
-        dialog.removeFrom(document.body);
-      };
-    };
-
-    const noteBtn = document.getElementById("noteBtn")! as HTMLElement;
-    noteBtn.onclick = () => {
-      const dialog = new Dialog();
-      const noteDialog = new NoteDialog();
-      dialog.addChild(noteDialog);
-
-      dialog.onSubmitClick = () => {
-        const { title = "", desc = "" } = noteDialog.extractData();
-        const noteItem = new Note(title, desc);
-        this.page.addChild(noteItem);
-        dialog.removeFrom(document.body);
-      };
-
-      dialog.onToggleClick = () => {
-        dialog.removeFrom(document.body);
-      };
-
-      dialog.attachTo(document.body);
-    };
-
-    const todoBtn = document.getElementById("todoBtn")! as HTMLButtonElement;
-    todoBtn.onclick = () => {
-      const dialog = new Dialog();
-      const todoDialog = new TodoDialog();
-      dialog.addChild(todoDialog);
-      dialog.onToggleClick = () => {
-        dialog.removeFrom(document.body);
-      };
-
-      dialog.onSubmitClick = () => {
-        const todoItem = new Todo(todoDialog.title);
-        this.page.addChild(todoItem);
-        dialog.removeFrom(document.body);
-      };
-
-      dialog.attachTo(document.body);
-    };
+    this.onClickFunc<Todo, TodoDialog>(
+      "todoBtn",
+      TodoDialog,
+      (input: TodoDialog) => new Todo(input.title)
+    );
   }
 
-  private onClickFunc(menu: Menu, id: string) {
+  private onClickFunc<
+    I extends Video | Image | Todo | Note,
+    T extends ImageDialog | NoteDialog | TodoDialog | VideoDialog
+  >(id: string, Input: InputConstractor<T>, makeItem: (args: T) => I) {
     const btn = document.getElementById(id)! as HTMLElement;
     btn.onclick = () => {
       const dialog = new Dialog();
-      const inputDialog = dialogMapper[menu]();
+      const inputDialog = new Input();
       dialog.addChild(inputDialog);
       dialog.onToggleClick = () => {
         dialog.removeFrom(document.body);
       };
       dialog.onSubmitClick = () => {
-        const args = inputDialog.extractData();
-        const item = itemMapper[menu]();
-        this.page.addChild(item);
+        const component = makeItem(inputDialog);
+        this.page.addChild(component);
+        dialog.removeFrom(document.body);
       };
+      dialog.attachTo(document.body);
     };
   }
 }
