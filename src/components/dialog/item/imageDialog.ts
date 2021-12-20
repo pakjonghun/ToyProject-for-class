@@ -8,6 +8,9 @@ export type extractType = {
 
 export interface IDialogItem extends BasicComponent<HTMLElement> {
   extractData(): extractType;
+  title?: string;
+  url?: string;
+  desc?: string;
 }
 
 export class ImageDialog
@@ -27,5 +30,15 @@ export class ImageDialog
     const url = this.element.querySelector(".titleInput")! as HTMLInputElement;
     const desc = this.element.querySelector(".descInput")! as HTMLInputElement;
     return { url: url.value, desc: desc.value };
+  }
+
+  get url() {
+    const url = this.element.querySelector(".titleInput")! as HTMLInputElement;
+    return url.value;
+  }
+
+  get desc() {
+    const desc = this.element.querySelector(".descInput")! as HTMLInputElement;
+    return desc.value;
   }
 }

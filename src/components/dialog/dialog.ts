@@ -2,7 +2,12 @@ import { IComposible } from "../page/page.js";
 import { BasicComponent, IBasicComponent } from "./../common/basicComponent.js";
 type onClose = () => void;
 
-export class Dialog extends BasicComponent<HTMLElement> implements IComposible {
+export interface IDialog extends BasicComponent<HTMLElement>, IComposible {
+  onToggleClick: onClose;
+  onSubmitClick: onClose;
+}
+
+export class Dialog extends BasicComponent<HTMLElement> implements IDialog {
   private onClick?: onClose;
   private onSubmit?: onClose;
   constructor() {
