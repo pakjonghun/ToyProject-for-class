@@ -1,5 +1,4 @@
 import { IbaseComponent } from "./interfaces.js";
-
 export class BaseComponent implements IbaseComponent {
   protected readonly element: HTMLElement;
   constructor(htmlString: string) {

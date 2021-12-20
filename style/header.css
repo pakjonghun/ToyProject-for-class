@@ -1,0 +1,21 @@
+.header {
+  width: inherit;
+  padding: 1rem 2rem;
+  background-color: var(--black90);
+  text-align: center;
+}
+
+.header__btns {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+}
+
+.header__btn:not(:last-child) {
+  margin-right: 0.5rem;
+}

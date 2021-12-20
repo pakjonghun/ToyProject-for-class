@@ -1,6 +1,24 @@
 @import url(./reset.css);
+@import url(./header.css);
 
 :root {
-  --black90: #00000009;
+  --black90: #00000090;
   --black50: #00000050;
+}
+
+body {
+  background: url(../assets//background.png) center/cover no-repeat;
+}
+
+.root {
+  width: 100%;
+  max-width: 1000px;
+  height: 100vh;
+  margin: auto;
+  background-color: var(--black50);
+}
+
+.header,
+.footer {
+  color: white;
 }
