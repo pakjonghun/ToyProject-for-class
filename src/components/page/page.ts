@@ -8,8 +8,8 @@ export class Page extends BaseComponent<HTMLUListElement> {
 
   addChild(section: IComponent) {
     const list = new ItemList();
-    list.attachTo(this.element);
     list.addChild(section);
+    list.attachTo(this.element);
   }
 }
 
