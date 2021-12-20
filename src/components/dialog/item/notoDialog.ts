@@ -1,8 +1,8 @@
-import { extractType, IDialogItem } from "./imageDialog.js";
 import { BasicComponent } from "./../../common/basicComponent.js";
+import { IInputDialog } from "../../app.js";
 export class NoteDialog
   extends BasicComponent<HTMLElement>
-  implements IDialogItem
+  implements IInputDialog
 {
   constructor() {
     super(`<div>
@@ -11,16 +11,6 @@ export class NoteDialog
             <label for="desc">DESC</label>
             <input type="text" class="desc">
           </div>`);
-  }
-
-  extractData(): extractType {
-    const title = this.element.querySelector(".title")! as HTMLInputElement;
-    const desc = this.element.querySelector(".desc")! as HTMLInputElement;
-
-    return {
-      title: title.value,
-      desc: desc.value,
-    };
   }
 
   get title() {

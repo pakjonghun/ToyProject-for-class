@@ -1,8 +1,8 @@
-import { extractType, IDialogItem } from "./imageDialog.js";
 import { BasicComponent } from "./../../common/basicComponent.js";
+import { IInputDialog } from "../../app.js";
 export class TodoDialog
   extends BasicComponent<HTMLElement>
-  implements IDialogItem
+  implements IInputDialog
 {
   constructor() {
     super(`<div>
@@ -14,12 +14,5 @@ export class TodoDialog
   get title() {
     const title = document.querySelector(".todo")! as HTMLInputElement;
     return title.value;
-  }
-
-  extractData(): extractType {
-    const title = document.querySelector(".todo")! as HTMLInputElement;
-    return {
-      title: title.value,
-    };
   }
 }
