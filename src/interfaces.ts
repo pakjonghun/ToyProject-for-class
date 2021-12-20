@@ -2,6 +2,6 @@ export interface IComponent {
   attachTo(parent: HTMLElement, position?: InsertPosition): void;
 }
 
-export interface Composible {
+export interface IComposible {
   addChild(section: IComponent): void;
 }
