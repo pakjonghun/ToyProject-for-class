@@ -32,13 +32,16 @@ export class Page<T extends list<ItemList>>
 
   onDrop(event: DragEvent) {
     event.preventDefault();
+    console.log(event.clientY);
+
     if (!this.curOvering || !this.curMoving) return;
     if (this.curOvering === this.curMoving) return;
 
     if (this.startY && this.overY && this.startY - this.overY < 0) {
-      this.curMoving.attach(this.curOvering, "afterend");
+      this.curMoving.removeFrom(this.element);
+      this.curOvering.attach(this.curMoving, "afterend");
     } else {
-      this.curMoving.attach(this.curOvering, "beforebegin");
+      this.curOvering.attach(this.curMoving, "beforebegin");
     }
   }
 
