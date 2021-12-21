@@ -11,6 +11,8 @@ export class Page<T extends list<ItemList>>
   extends BaseComponent<HTMLUListElement>
   implements IComposible
 {
+  private startY?: number;
+  private overY?: number;
   private children? = new Set<IItemList>();
   private curMoving?: (IComponent & IItemList) | null;
   private curOvering?: (IComponent & IItemList) | null;
@@ -33,8 +35,11 @@ export class Page<T extends list<ItemList>>
     if (!this.curOvering || !this.curMoving) return;
     if (this.curOvering === this.curMoving) return;
 
-    this.curMoving.removeFrom(this.element);
-    this.curMoving.attach(this.curOvering, "beforebegin");
+    if (this.startY && this.overY && this.startY - this.overY < 0) {
+      this.curMoving.attach(this.curOvering, "afterend");
+    } else {
+      this.curMoving.attach(this.curOvering, "beforebegin");
+    }
   }
 
   onDragOver(event: DragEvent) {
@@ -57,7 +62,11 @@ export class Page<T extends list<ItemList>>
     list.attachTo(this.element);
     this.children?.add(list);
     list.setOnStateListener(
-      (target: IItemList & IComposible & IComponent, state: DragState) => {
+      (
+        target: IItemList & IComposible & IComponent,
+        state: DragState,
+        y?: number
+      ) => {
         switch (state) {
           case "end":
             this.curMoving = null;
@@ -67,10 +76,11 @@ export class Page<T extends list<ItemList>>
             this.curOvering = null;
             break;
           case "over":
-            console.log("over", target);
+            this.overY = y;
             this.curOvering = target;
             break;
           case "start":
+            this.startY = y;
             this.curMoving = target;
             this.toggleMute();
             break;
@@ -81,11 +91,16 @@ export class Page<T extends list<ItemList>>
     );
   }
 }
+//y 192, 754
+//cliy 192, 754
+//offsety -93,31
+//scrolly 362,865
 type DragState = "start" | "end" | "over" | "leave";
 type OnCloseListener = () => void;
 type StateListener<T extends IComponent> = (
   component: T,
-  state: DragState
+  state: DragState,
+  y?: number
 ) => void;
 
 interface IItemList {
@@ -135,7 +150,7 @@ export class ItemList
   }
 
   onDragStart(_: DragEvent) {
-    this.listenerObserver("start");
+    this.listenerObserver("start", _.clientY);
   }
 
   onDragEnd(_: DragEvent) {
@@ -143,15 +158,15 @@ export class ItemList
   }
 
   onDragOver(_: DragEvent) {
-    this.listenerObserver("over");
+    this.listenerObserver("over", _.clientY);
   }
 
   onDragLeave(_: DragEvent) {
     this.listenerObserver("leave");
   }
 
-  listenerObserver(state: DragState) {
-    this.stateListener && this.stateListener(this, state);
+  listenerObserver(state: DragState, y?: number) {
+    this.stateListener && this.stateListener(this, state, y);
     state === "end" && this.onCloseListener && this.onCloseListener();
   }
 
