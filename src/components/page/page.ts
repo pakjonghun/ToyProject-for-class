@@ -15,14 +15,6 @@ export class Page<T extends list<ItemList>>
   constructor(list: T) {
     super('<ul class="page"></ul>');
     this.list = list;
-
-    this.element.addEventListener("drop", (event: DragEvent) => {
-      this.drop(event);
-    });
-
-    this.element.addEventListener("dragover", (event: DragEvent) => {
-      this.dragover(event);
-    });
   }
 
   addChild(section: IComponent) {
@@ -30,24 +22,30 @@ export class Page<T extends list<ItemList>>
     list.setOnClick = () => list.removeFrom(this.element);
     list.addChild(section);
     list.attachTo(this.element);
+    list.setOnStateListener((target: IItemList, state: DragState) => {
+      console.log(state, target);
+    });
   }
+}
+type DragState = "start" | "end" | "over" | "leave";
+type OnCloseListener = () => void;
+type StateListener<T extends IComponent> = (
+  component: T,
+  state: DragState
+) => void;
 
-  drop(event: DragEvent) {
-    event.preventDefault();
-    console.log("drop", event);
-  }
-
-  dragover(event: DragEvent) {
-    event.preventDefault();
-    console.log("dragover", event);
-  }
+interface IItemList {
+  setOnStateListener(listener: StateListener<ItemList>): void;
+  setOnCloseListener(listener: OnCloseListener): void;
 }
 
 export class ItemList
   extends BaseComponent<HTMLElement>
-  implements IComposible
+  implements IComposible, IItemList
 {
   private onClick?: onClick;
+  private stateListener?: StateListener<ItemList>;
+  private onCloseListener?: OnCloseListener;
   constructor() {
     super(`<li draggable="true"><button class="times">&times;</button></li>`);
 
@@ -63,14 +61,43 @@ export class ItemList
     this.element.addEventListener("dragend", (event: DragEvent) => {
       this.onDragEnd(event);
     });
+
+    this.element.addEventListener("dragover", (event: DragEvent) => {
+      this.onDragOver(event);
+    });
+
+    this.element.addEventListener("dragleave", (event: DragEvent) => {
+      this.onDragLeave(event);
+    });
   }
 
-  onDragStart(event: DragEvent) {
-    console.log(event);
+  setOnStateListener(listener: StateListener<ItemList>) {
+    this.stateListener = listener;
   }
 
-  onDragEnd(event: DragEvent) {
-    console.log(event);
+  setOnCloseListener(listener: OnCloseListener) {
+    this.onCloseListener = listener;
+  }
+
+  onDragStart(_: DragEvent) {
+    this.listenerObserver("start");
+  }
+
+  onDragEnd(_: DragEvent) {
+    this.listenerObserver("end");
+  }
+
+  onDragOver(_: DragEvent) {
+    this.listenerObserver("over");
+  }
+
+  onDragLeave(_: DragEvent) {
+    this.listenerObserver("leave");
+  }
+
+  listenerObserver(state: DragState) {
+    this.stateListener && this.stateListener(this, state);
+    state === "end" && this.onCloseListener && this.onCloseListener();
   }
 
   set setOnClick(onClick: onClick) {
