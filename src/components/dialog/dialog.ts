@@ -7,13 +7,13 @@ export class Dialog extends BaseComponent<HTMLElement> implements IComposible {
   private onSubmit?: onClick;
   constructor() {
     super(
-      `<div class="dialog">
+      `<dialog class="dialog">
         <div class="container">
           <button class="close">&times;</button>
           <div class="body"></div>
           <button class="add">Add</button>
         </div>
-      </div>`
+      </dialog>`
     );
 
     const close = this.element.querySelector(".close")! as HTMLButtonElement;
