@@ -69,7 +69,7 @@ export class Page<T extends list<ItemList>>
             this.curMoving = null;
             this.toggleMute();
             target.toggleClass("moving");
-            this.curOvering?.toggleClass("overing");
+            this.curOvering && this.curOvering.removeClass("overing");
             break;
           case "leave":
             this.curOvering = null;
@@ -78,6 +78,7 @@ export class Page<T extends list<ItemList>>
           case "over":
             this.curOvering = target;
             target.toggleClass("overing");
+
             break;
           case "start":
             this.curMoving = target;
@@ -103,6 +104,7 @@ interface IItemList {
   setOnStateListener(listener: StateListener<ItemList>): void;
   setOnCloseListener(listener: OnCloseListener): void;
   toggleClass(className: string): void;
+  removeClass(className: string): void;
   getY(): number;
 }
 
@@ -177,6 +179,10 @@ export class ItemList
 
   toggleClass(className: string) {
     this.element.classList.toggle(className);
+  }
+
+  removeClass(className: string) {
+    this.element.classList.remove(className);
   }
 
   getY(): number {
