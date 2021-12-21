@@ -53,3 +53,12 @@ body {
 .mute * {
   pointer-events: none;
 }
+
+.moving {
+  opacity: 0.6;
+  border: 1px solid red;
+}
+
+.overing {
+  transform: scale(1.1);
+}

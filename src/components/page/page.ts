@@ -49,7 +49,7 @@ export class Page<T extends list<ItemList>>
 
   toggleMute() {
     this.children?.forEach((item) => {
-      item.toggleMute();
+      item.toggleClass("mute");
     });
   }
 
@@ -68,16 +68,21 @@ export class Page<T extends list<ItemList>>
           case "end":
             this.curMoving = null;
             this.toggleMute();
+            target.toggleClass("moving");
+            this.curOvering?.toggleClass("overing");
             break;
           case "leave":
             this.curOvering = null;
+            target.toggleClass("overing");
             break;
           case "over":
             this.curOvering = target;
+            target.toggleClass("overing");
             break;
           case "start":
             this.curMoving = target;
             this.toggleMute();
+            target.toggleClass("moving");
             break;
           default:
             throw new Error("올바른 상태값이 아닙니다.");
@@ -91,14 +96,13 @@ type DragState = "start" | "end" | "over" | "leave";
 type OnCloseListener = () => void;
 type StateListener<T extends IComponent> = (
   component: T,
-  state: DragState,
-  y?: number
+  state: DragState
 ) => void;
 
 interface IItemList {
   setOnStateListener(listener: StateListener<ItemList>): void;
   setOnCloseListener(listener: OnCloseListener): void;
-  toggleMute(): void;
+  toggleClass(className: string): void;
   getY(): number;
 }
 
@@ -125,7 +129,7 @@ export class ItemList
       this.onDragEnd(event);
     });
 
-    this.element.addEventListener("dragover", (event: DragEvent) => {
+    this.element.addEventListener("dragenter", (event: DragEvent) => {
       this.onDragOver(event);
     });
 
@@ -171,8 +175,8 @@ export class ItemList
     section.attachTo(this.element);
   }
 
-  toggleMute() {
-    this.element.classList.toggle("mute");
+  toggleClass(className: string) {
+    this.element.classList.toggle(className);
   }
 
   getY(): number {

@@ -4,6 +4,7 @@
   margin: 2rem;
   padding: 1rem;
   background-color: var(--black50);
+  transition: 200ms ease-in all;
 }
 
 .page h1,
