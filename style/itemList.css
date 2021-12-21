@@ -21,3 +21,7 @@
   height: 1rem;
   margin-right: 3rem;
 }
+
+.page .img {
+  width: inherit;
+}

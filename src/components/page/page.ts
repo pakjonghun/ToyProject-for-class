@@ -15,6 +15,14 @@ export class Page<T extends list<ItemList>>
   constructor(list: T) {
     super('<ul class="page"></ul>');
     this.list = list;
+
+    this.element.addEventListener("drop", (event: DragEvent) => {
+      this.drop(event);
+    });
+
+    this.element.addEventListener("dragover", (event: DragEvent) => {
+      this.dragover(event);
+    });
   }
 
   addChild(section: IComponent) {
@@ -22,6 +30,16 @@ export class Page<T extends list<ItemList>>
     list.setOnClick = () => list.removeFrom(this.element);
     list.addChild(section);
     list.attachTo(this.element);
+  }
+
+  drop(event: DragEvent) {
+    event.preventDefault();
+    console.log("drop", event);
+  }
+
+  dragover(event: DragEvent) {
+    event.preventDefault();
+    console.log("dragover", event);
   }
 }
 
@@ -31,12 +49,28 @@ export class ItemList
 {
   private onClick?: onClick;
   constructor() {
-    super(`<li><button class="times">&times;</button></li>`);
+    super(`<li draggable="true"><button class="times">&times;</button></li>`);
 
     const times = this.element.querySelector(".times")! as HTMLElement;
     times.onclick = () => {
       this.onClick && this.onClick();
     };
+
+    this.element.addEventListener("dragstart", (event: DragEvent) => {
+      this.onDragStart(event);
+    });
+
+    this.element.addEventListener("dragend", (event: DragEvent) => {
+      this.onDragEnd(event);
+    });
+  }
+
+  onDragStart(event: DragEvent) {
+    console.log(event);
+  }
+
+  onDragEnd(event: DragEvent) {
+    console.log(event);
   }
 
   set setOnClick(onClick: onClick) {
