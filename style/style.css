@@ -1,5 +1,6 @@
 @import url(./reset.css);
 @import url(./header.css);
+@import url(./dialog.css);
 
 :root {
   --black90: #00000090;

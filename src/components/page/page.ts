@@ -1,18 +1,18 @@
-import { IComposible, IComponent } from "./../../interfaces.js";
+import { IComposible, IComponent, IOnClick } from "./../../interfaces.js";
 import { BaseComponent } from "../../component.js";
 
 export type onClick = () => void;
 
-type list = {
-  new (): ItemList;
+type list<I extends IComposible & IComposible & IOnClick> = {
+  new (): I;
 };
 
-export class Page
+export class Page<T extends list<ItemList>>
   extends BaseComponent<HTMLUListElement>
   implements IComposible
 {
-  private readonly list: list;
-  constructor(list: list) {
+  private readonly list: T;
+  constructor(list: T) {
     super('<ul class="page"></ul>');
     this.list = list;
   }
