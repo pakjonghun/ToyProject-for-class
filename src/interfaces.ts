@@ -3,6 +3,7 @@ import { onClick } from "./components/page/page.js";
 export interface IComponent {
   attachTo(parent: HTMLElement, position?: InsertPosition): void;
   removeFrom(parent: HTMLElement): void;
+  attach(siblingComponent: IComponent, position?: InsertPosition): void;
 }
 
 export interface IComposible {

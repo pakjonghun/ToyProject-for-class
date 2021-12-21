@@ -11,20 +11,74 @@ export class Page<T extends list<ItemList>>
   extends BaseComponent<HTMLUListElement>
   implements IComposible
 {
+  private children? = new Set<IItemList>();
+  private curMoving?: (IComponent & IItemList) | null;
+  private curOvering?: (IComponent & IItemList) | null;
   private readonly list: T;
   constructor(list: T) {
     super('<ul class="page"></ul>');
     this.list = list;
+
+    this.element.addEventListener("drop", (event: DragEvent) => {
+      this.onDrop(event);
+    });
+
+    this.element.addEventListener("dragover", (event: DragEvent) => {
+      this.onDragOver(event);
+    });
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    if (!this.curOvering || !this.curMoving) return;
+    if (this.curOvering === this.curMoving) return;
+
+    this.curMoving.removeFrom(this.element);
+    this.curMoving.attach(this.curOvering, "beforebegin");
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  toggleMute() {
+    this.children?.forEach((item) => {
+      item.toggleMute();
+    });
   }
 
   addChild(section: IComponent) {
     const list = new this.list();
-    list.setOnClick = () => list.removeFrom(this.element);
+    list.setOnClick = () => {
+      list.removeFrom(this.element);
+      this.children?.delete(list);
+    };
     list.addChild(section);
     list.attachTo(this.element);
-    list.setOnStateListener((target: IItemList, state: DragState) => {
-      console.log(state, target);
-    });
+    this.children?.add(list);
+    list.setOnStateListener(
+      (target: IItemList & IComposible & IComponent, state: DragState) => {
+        switch (state) {
+          case "end":
+            this.curMoving = null;
+            this.toggleMute();
+            break;
+          case "leave":
+            this.curOvering = null;
+            break;
+          case "over":
+            console.log("over", target);
+            this.curOvering = target;
+            break;
+          case "start":
+            this.curMoving = target;
+            this.toggleMute();
+            break;
+          default:
+            throw new Error("올바른 상태값이 아닙니다.");
+        }
+      }
+    );
   }
 }
 type DragState = "start" | "end" | "over" | "leave";
@@ -37,6 +91,7 @@ type StateListener<T extends IComponent> = (
 interface IItemList {
   setOnStateListener(listener: StateListener<ItemList>): void;
   setOnCloseListener(listener: OnCloseListener): void;
+  toggleMute(): void;
 }
 
 export class ItemList
@@ -106,5 +161,9 @@ export class ItemList
 
   addChild(section: IComponent) {
     section.attachTo(this.element);
+  }
+
+  toggleMute() {
+    this.element.classList.toggle("mute");
   }
 }

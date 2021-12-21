@@ -7,7 +7,7 @@ export class BaseComponent<T extends HTMLElement> implements IComponent {
     this.element = template.content.firstElementChild! as T;
   }
 
-  attachTo(parent: HTMLElement, position: InsertPosition = "beforeend") {
+  attachTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
     parent.insertAdjacentElement(position, this.element);
   }
 
@@ -16,5 +16,9 @@ export class BaseComponent<T extends HTMLElement> implements IComponent {
       throw new Error("부모와 자식 관계가 성립되지 않습니다.");
     }
     parent.removeChild(this.element);
+  }
+
+  attach(siblingComponent: IComponent, position?: InsertPosition) {
+    siblingComponent.attachTo(this.element, position);
   }
 }
