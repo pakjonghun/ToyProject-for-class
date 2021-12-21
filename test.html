@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .test {
+        width: 10rem;
+        height: 10rem;
+        background-color: red;
+      }
+      .target {
+        width: 10rem;
+        height: 10rem;
+        border: 1px solid black;
+        transition: 200ms linear all;
+      }
+
+      .hover {
+        border: 3px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {});
+
+      function dragStart(e) {
+        e.dataTransfer.setData("text/plain", e.target.id);
+      }
+
+      function dropover(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+      }
+
+      function handler(e) {
+        e.preventDefault();
+        const data = e.dataTransfer.getData("text/plain");
+        console.log(data);
+        // e.target.appendChild(document.getElementById(data));
+      }
+    </script>
+    <p id="good" ondrop="handler(event)" ondragover="dropover(event)">copy</p>
+    <div id="test" class="test" draggable="true">dfd</div>
+    <div id="t" class="target" ondrop="dropover(event)">dfd</div>
+  </body>
+</html>
