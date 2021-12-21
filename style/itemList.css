@@ -1,8 +1,3 @@
-.page {
-  height: 80vh;
-  overflow-y: auto;
-}
-
 .page li {
   display: flex;
   align-items: center;

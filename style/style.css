@@ -20,8 +20,13 @@ body {
   max-width: 1000px;
   margin: auto;
   background-color: var(--black50);
+  overflow: hidden;
 }
-
+.page {
+  border: 1px solid black;
+  height: 80vh;
+  overflow-y: auto;
+}
 .main {
   height: 100%;
 }
@@ -30,6 +35,14 @@ body {
 .footer {
   color: white;
   background-color: var(--black90);
+}
+
+.header {
+  height: 15vh;
+}
+
+.footer {
+  height: 5vh;
 }
 
 .footer {
