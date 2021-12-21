@@ -12,3 +12,8 @@ export interface IComposible {
 export interface IOnClick {
   setOnClick: onClick;
 }
+
+export interface IGetInputValues {
+  getTitle: string;
+  getContent: String;
+}

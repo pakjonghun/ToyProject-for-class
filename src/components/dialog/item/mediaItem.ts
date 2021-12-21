@@ -1,6 +1,6 @@
-import { IGetInputValues } from "./../../../interfaces";
+import { IGetInputValues } from "../../../interfaces.js";
 import { BaseComponent } from "./../../../component.js";
-export class TextItem
+export class MediaItem
   extends BaseComponent<HTMLElement>
   implements IGetInputValues
 {
@@ -9,7 +9,7 @@ export class TextItem
       `<div>
         <label for="title">Title</label>
         <input id="title" type="text" class="title" />
-        <label for="content">Content</label>
+        <label for="content">Url</label>
         <input id="content" type="text" class="content" />
       </div>`
     );
