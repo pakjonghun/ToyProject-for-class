@@ -22,29 +22,39 @@
       .hover {
         border: 3px solid red;
       }
+
+      #good {
+        width: 100vw;
+        height: 100vh;
+      }
     </style>
   </head>
   <body>
     <script>
-      window.addEventListener("DOMContentLoaded", () => {});
+      window.addEventListener("DOMContentLoaded", () => {
+        const test = document.getElementById("test");
+        test.addEventListener("dragstart", dragStart);
+      });
 
       function dragStart(e) {
         e.dataTransfer.setData("text/plain", e.target.id);
+        e.dataTransfer.dropEffect = "link";
       }
 
       function dropover(e) {
         e.preventDefault();
-        e.dataTransfer.dropEffect = "move";
+        e.dataTransfer.dropEffect = "link";
       }
 
       function handler(e) {
         e.preventDefault();
         const data = e.dataTransfer.getData("text/plain");
-        console.log(data);
-        // e.target.appendChild(document.getElementById(data));
+        e.target.appendChild(document.getElementById(data));
       }
     </script>
-    <p id="good" ondrop="handler(event)" ondragover="dropover(event)">copy</p>
+    <div id="good" ondrop="handler(event)" ondragover="dropover(event)">
+      copy
+    </div>
     <div id="test" class="test" draggable="true">dfd</div>
     <div id="t" class="target" ondrop="dropover(event)">dfd</div>
   </body>
