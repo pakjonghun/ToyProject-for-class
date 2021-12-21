@@ -1,7 +1,7 @@
 import { BaseComponent } from "../../../component.js";
 
 export class Video extends BaseComponent<HTMLScriptElement> {
-  constructor(url: string, title: string) {
+  constructor(title: string, url: string) {
     super(
       `<section>
         <iframe class="video"></iframe>

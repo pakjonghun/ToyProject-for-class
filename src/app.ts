@@ -18,8 +18,29 @@ class App {
   private readonly page: IComponent & IComposible;
 
   constructor(root: HTMLElement) {
-    this.body = document.body;
     this.page = new Page(ItemList);
+    this.page.addChild(
+      new Image("Image Title", "https://picsum.photos/800/400")
+    );
+    this.page.addChild(
+      new Video("Video Title", "https://youtu.be/D7cwvvA7cP0")
+    );
+    this.page.addChild(
+      new Note("Note Title", "Don't forget to code your dream")
+    );
+    this.page.addChild(new Todo("Todo Title"));
+    this.page.addChild(
+      new Image("Image Title", "https://picsum.photos/800/400")
+    );
+    this.page.addChild(
+      new Video("Video Title", "https://youtu.be/D7cwvvA7cP0")
+    );
+    this.page.addChild(
+      new Note("Note Title", "Don't forget to code your dream")
+    );
+    this.page.addChild(new Todo("Todo Title"));
+
+    this.body = document.body;
     this.page.attachTo(root);
 
     this.onMenuClick<TextItem>(

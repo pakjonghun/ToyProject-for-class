@@ -1,7 +1,7 @@
 import { BaseComponent } from "../../../component.js";
 
 export class Image extends BaseComponent<HTMLScriptElement> {
-  constructor(url: string, title: string) {
+  constructor(title: string, url: string) {
     super(`<section>
             <img class="img">
             <h1 class="title"></h1>

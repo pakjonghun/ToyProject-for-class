@@ -37,10 +37,6 @@ export class ItemList
     times.onclick = () => {
       this.onClick && this.onClick();
     };
-
-    this.element.addEventListener("dragstart", (e) => {
-      console.log(1);
-    });
   }
 
   set setOnClick(onClick: onClick) {
